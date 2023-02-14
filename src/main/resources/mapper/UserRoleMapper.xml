@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="learn.quickweb.mvc.mapper.UserRoleMapper">
+
+    <resultMap type="learn.quickweb.mvc.domain.UserRole" id="UserRoleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserRoleMap">
+        select id,
+               username,
+               role_id
+        from user_role
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="UserRoleMap">
+        select
+        id, username, role_id from user_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                and role_id = #{roleId}
+            </if>
+        </where>
+        <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
+            order by
+            <choose>
+                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
+                    id
+                </when>
+                <when test="orderByMe == 'username' and orderByMeSort == 'ASC'">
+                    username
+                </when>
+                <when test="orderByMe == 'roleId' and orderByMeSort == 'ASC'">
+                    role_id
+                </when>
+                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
+                    id desc
+                </when>
+                <when test="orderByMe == 'username' and orderByMeSort == 'DESC'">
+                    username desc
+                </when>
+                <when test="orderByMe == 'roleId' and orderByMeSort == 'DESC'">
+                    role_id desc
+                </when>
+                <otherwise>
+                    1
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <!--模糊查询指定行数据-->
+    <select id="queryAllLike" resultMap="UserRoleMap">
+        select
+        id, username, role_id from user_role
+        <where>
+            <if test="id != null">
+                and id like concat('%',#{id},'%')
+            </if>
+            <if test="username != null and username != ''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="roleId != null and roleId != ''">
+                and role_id like concat('%',#{roleId},'%')
+            </if>
+        </where>
+        <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
+            order by
+            <choose>
+                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
+                    id
+                </when>
+                <when test="orderByMe == 'username' and orderByMeSort == 'ASC'">
+                    username
+                </when>
+                <when test="orderByMe == 'roleId' and orderByMeSort == 'ASC'">
+                    role_id
+                </when>
+                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
+                    id desc
+                </when>
+                <when test="orderByMe == 'username' and orderByMeSort == 'DESC'">
+                    username desc
+                </when>
+                <when test="orderByMe == 'roleId' and orderByMeSort == 'DESC'">
+                    role_id desc
+                </when>
+                <otherwise>
+                    1
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from user_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                and role_id = #{roleId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into user_role(username, role_id)
+        values (#{username}, #{roleId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into user_role
+        (username, role_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.roleId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into user_role
+        (username, role_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.roleId})
+        </foreach>
+        on duplicate key update
+        username = values(username
+        ),
+        role_id = values(role_id
+        )
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update user_role
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="roleId != null and roleId != ''">
+                role_id = #{roleId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from user_role
+        where id = #{id}
+    </delete>
+
+</mapper>
+
