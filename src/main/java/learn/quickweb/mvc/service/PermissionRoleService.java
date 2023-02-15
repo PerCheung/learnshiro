@@ -7,7 +7,7 @@ import learn.quickweb.util.R;
  * 权限角色连接表(PermissionRole)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:50
+ * @since 2023-02-15 15:43:40
  */
 public interface PermissionRoleService {
 

@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 用户角色连接表(UserRole)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:52
+ * @since 2023-02-15 15:43:43
  */
 @Slf4j
 @Service
@@ -30,7 +30,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      */
     @Override
     public R queryById(Integer id) {
-        return R.ok().setData(this.userRoleMapper.queryById(id));
+        return R.ok().data(this.userRoleMapper.queryById(id));
     }
 
     /**
@@ -41,7 +41,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      */
     @Override
     public R queryAll(UserRole userRole) {
-        return R.ok().setData(this.userRoleMapper.queryAll(userRole));
+        return R.ok().data(this.userRoleMapper.queryAll(userRole));
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      */
     @Override
     public R queryAllLike(UserRole userRole) {
-        return R.ok().setData(this.userRoleMapper.queryAllLike(userRole));
+        return R.ok().data(this.userRoleMapper.queryAllLike(userRole));
     }
 
     /**
@@ -65,7 +65,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      */
     @Override
     public R page(int pageNum, int pageSize, UserRole userRole) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userRoleMapper.queryAll(userRole)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userRoleMapper.queryAll(userRole)));
     }
 
     /**
@@ -78,7 +78,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      */
     @Override
     public R pageLike(int pageNum, int pageSize, UserRole userRole) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userRoleMapper.queryAllLike(userRole)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userRoleMapper.queryAllLike(userRole)));
     }
 
     /**
@@ -90,7 +90,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public R insert(UserRole userRole) {
         this.userRoleMapper.insert(userRole);
-        return R.ok().setData(userRole);
+        return R.ok().data(userRole);
     }
 
     /**
@@ -102,7 +102,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public R update(UserRole userRole) {
         this.userRoleMapper.update(userRole);
-        return R.ok().setData(this.userRoleMapper.queryById(userRole.getId()));
+        return R.ok().data(this.userRoleMapper.queryById(userRole.getId()));
     }
 
     /**
@@ -114,6 +114,6 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public R deleteById(Integer id) {
         boolean del = this.userRoleMapper.deleteById(id) > 0;
-        return R.ok().setData(del);
+        return R.ok().data(del);
     }
 }

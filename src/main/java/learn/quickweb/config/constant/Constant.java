@@ -19,12 +19,6 @@ public interface Constant {
     String SWAGGER_PACKAGE = "learn.quickweb.mvc.controller";
 
     /**
-     * MD5盐用于混交md5
-     */
-    String MD5_SALT = "MD5Util";
-
-
-    /**
      * jwt过期时间
      * <p>
      * 1天

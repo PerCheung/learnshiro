@@ -14,7 +14,7 @@ import java.io.IOException;
  * 提供跨域支持
  *
  * @author Peter Cheung
- * @since 2023-02-13 13:56:51
+ * @since 2023-02-15 15:43:43
  */
 @Slf4j
 @Configuration
@@ -32,7 +32,7 @@ public class AccessFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "*");
-        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+        //跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
         if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
             response.setStatus(HttpStatus.OK.value());
             return;

@@ -3,11 +3,11 @@ package learn.quickweb.mvc.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import learn.quickweb.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import learn.quickweb.mvc.domain.User;
 import learn.quickweb.mvc.service.UserService;
 import learn.quickweb.util.R;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 用户表(User)表控制层
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:41
  */
 @Slf4j
 @RestController
@@ -94,6 +94,17 @@ public class UserController {
     }
 
     /**
+     * 注册用户
+     */
+    @ApiOperation("注册用户")
+    @PostMapping("register")
+    @RequiresRoles("admin")
+    public R register(@ApiParam(value = "user 实体") @RequestBody User user) {
+        return this.userService.register(user);
+    }
+
+
+    /**
      * 新增数据
      *
      * @param user 实体
@@ -102,7 +113,6 @@ public class UserController {
     @ApiOperation("新增数据")
     @PostMapping
     public R add(@ApiParam(value = "user 实体") @RequestBody User user) {
-        user.setPassword(MD5Util.toMD5(user.getUsername()));
         return this.userService.insert(user);
     }
 
@@ -129,5 +139,6 @@ public class UserController {
     public R deleteById(@ApiParam(value = "id 主键") @RequestParam Integer id) {
         return this.userService.deleteById(id);
     }
+
 }
 

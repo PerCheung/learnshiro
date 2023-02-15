@@ -1,9 +1,8 @@
 package learn.quickweb.util;
 
-import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 
@@ -11,13 +10,12 @@ import java.io.Serializable;
  * 统一返回对象R
  *
  * @author Peter Cheung
- * @since 2023-02-13 13:56:51
+ * @since 2023-02-15 15:43:43
  */
 @Slf4j
-@Data
 @ApiModel("统一返回对象R")
 public class R implements Serializable {
-    private static final long serialVersionUID = -38982351468679114L;
+    private static final long serialVersionUID = -82680831297458297L;
     @ApiModelProperty(value = "响应编码")
     private int code;
     @ApiModelProperty(value = "响应信息")
@@ -25,13 +23,31 @@ public class R implements Serializable {
     @ApiModelProperty(value = "响应数据")
     private Object data;
 
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    /**
+     * 私有构造方法
+     */
+    private R() {
+    }
+
     /**
      * 设置数据
      *
      * @param data 数据
      * @return R
      */
-    public R setData(Object data) {
+    public R data(Object data) {
         this.data = data;
         return this;
     }
@@ -56,7 +72,7 @@ public class R implements Serializable {
      */
     public static R unauthorized() {
         R r = new R();
-        r.code = 1401;
+        r.code = 401;
         r.message = "unauthorized";
         return r;
     }
@@ -69,7 +85,7 @@ public class R implements Serializable {
      */
     public static R forbidden() {
         R r = new R();
-        r.code = 1403;
+        r.code = 403;
         r.message = "Forbidden";
         return r;
     }
@@ -82,9 +98,8 @@ public class R implements Serializable {
      */
     public static R exp() {
         R r = new R();
-        r.code = 1500;
+        r.code = 500;
         r.message = "Internal Server Error";
         return r;
     }
 }
-

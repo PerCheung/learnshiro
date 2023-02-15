@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 角色表(Role)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:41
  */
 @Slf4j
 @Service
@@ -30,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public R queryById(Integer id) {
-        return R.ok().setData(this.roleMapper.queryById(id));
+        return R.ok().data(this.roleMapper.queryById(id));
     }
 
     /**
@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public R queryAll(Role role) {
-        return R.ok().setData(this.roleMapper.queryAll(role));
+        return R.ok().data(this.roleMapper.queryAll(role));
     }
 
     /**
@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public R queryAllLike(Role role) {
-        return R.ok().setData(this.roleMapper.queryAllLike(role));
+        return R.ok().data(this.roleMapper.queryAllLike(role));
     }
 
     /**
@@ -65,7 +65,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public R page(int pageNum, int pageSize, Role role) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.roleMapper.queryAll(role)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.roleMapper.queryAll(role)));
     }
 
     /**
@@ -78,7 +78,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public R pageLike(int pageNum, int pageSize, Role role) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.roleMapper.queryAllLike(role)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.roleMapper.queryAllLike(role)));
     }
 
     /**
@@ -90,7 +90,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public R insert(Role role) {
         this.roleMapper.insert(role);
-        return R.ok().setData(role);
+        return R.ok().data(role);
     }
 
     /**
@@ -102,7 +102,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public R update(Role role) {
         this.roleMapper.update(role);
-        return R.ok().setData(this.roleMapper.queryById(role.getId()));
+        return R.ok().data(this.roleMapper.queryById(role.getId()));
     }
 
     /**
@@ -114,6 +114,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public R deleteById(Integer id) {
         boolean del = this.roleMapper.deleteById(id) > 0;
-        return R.ok().setData(del);
+        return R.ok().data(del);
     }
 }

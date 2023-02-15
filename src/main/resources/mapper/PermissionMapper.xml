@@ -191,8 +191,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into permission(permission_id, description)
-        values (#{permissionId}, #{description})
+        insert into permission(permission_id, description, create_time, update_time, deleted)
+        values (#{permissionId}, #{description}, #{createTime}, #{updateTime}, #{deleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

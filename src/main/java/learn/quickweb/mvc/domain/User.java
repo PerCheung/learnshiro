@@ -14,7 +14,7 @@ import java.util.Date;
  * 用户表(User)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:41
  */
 @Slf4j
 @Data
@@ -22,7 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("用户表(User)实体类")
 public class User implements Serializable {
-    private static final long serialVersionUID = 396156017342180404L;
+    private static final long serialVersionUID = -16244260293911732L;
     /**
      * 主键
      */
@@ -38,6 +38,11 @@ public class User implements Serializable {
      */
     @ApiModelProperty(value = "密码")
     private String password;
+    /**
+     * 盐
+     */
+    @ApiModelProperty(value = "盐")
+    private String salt;
     /**
      * 创建时间
      */

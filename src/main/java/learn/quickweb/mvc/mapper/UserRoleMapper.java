@@ -10,7 +10,7 @@ import java.util.List;
  * 用户角色连接表(UserRole)表数据库访问层
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:42
  */
 @Mapper
 public interface UserRoleMapper {

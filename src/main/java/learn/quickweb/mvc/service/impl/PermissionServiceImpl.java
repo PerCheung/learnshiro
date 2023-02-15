@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 权限表(Permission)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:50
+ * @since 2023-02-15 15:43:39
  */
 @Slf4j
 @Service
@@ -30,7 +30,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public R queryById(Integer id) {
-        return R.ok().setData(this.permissionMapper.queryById(id));
+        return R.ok().data(this.permissionMapper.queryById(id));
     }
 
     /**
@@ -41,7 +41,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public R queryAll(Permission permission) {
-        return R.ok().setData(this.permissionMapper.queryAll(permission));
+        return R.ok().data(this.permissionMapper.queryAll(permission));
     }
 
     /**
@@ -52,7 +52,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public R queryAllLike(Permission permission) {
-        return R.ok().setData(this.permissionMapper.queryAllLike(permission));
+        return R.ok().data(this.permissionMapper.queryAllLike(permission));
     }
 
     /**
@@ -65,7 +65,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public R page(int pageNum, int pageSize, Permission permission) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionMapper.queryAll(permission)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionMapper.queryAll(permission)));
     }
 
     /**
@@ -78,7 +78,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public R pageLike(int pageNum, int pageSize, Permission permission) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionMapper.queryAllLike(permission)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionMapper.queryAllLike(permission)));
     }
 
     /**
@@ -90,7 +90,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public R insert(Permission permission) {
         this.permissionMapper.insert(permission);
-        return R.ok().setData(permission);
+        return R.ok().data(permission);
     }
 
     /**
@@ -102,7 +102,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public R update(Permission permission) {
         this.permissionMapper.update(permission);
-        return R.ok().setData(this.permissionMapper.queryById(permission.getId()));
+        return R.ok().data(this.permissionMapper.queryById(permission.getId()));
     }
 
     /**
@@ -114,6 +114,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public R deleteById(Integer id) {
         boolean del = this.permissionMapper.deleteById(id) > 0;
-        return R.ok().setData(del);
+        return R.ok().data(del);
     }
 }

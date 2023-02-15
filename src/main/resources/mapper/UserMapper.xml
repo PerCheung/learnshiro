@@ -6,6 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="deleted" column="deleted" jdbcType="INTEGER"/>
@@ -16,6 +17,7 @@
         select id,
                username,
                password,
+               salt,
                create_time,
                update_time,
                deleted
@@ -26,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAll" resultMap="UserMap">
         select
-        id, username, password, create_time, update_time, deleted from user
+        id, username, password, salt, create_time, update_time, deleted from user
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -36,6 +38,9 @@
             </if>
             <if test="password != null and password != ''">
                 and password = #{password}
+            </if>
+            <if test="salt != null and salt != ''">
+                and salt = #{salt}
             </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
@@ -59,6 +64,9 @@
                 <when test="orderByMe == 'password' and orderByMeSort == 'ASC'">
                     password
                 </when>
+                <when test="orderByMe == 'salt' and orderByMeSort == 'ASC'">
+                    salt
+                </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'ASC'">
                     create_time
                 </when>
@@ -76,6 +84,9 @@
                 </when>
                 <when test="orderByMe == 'password' and orderByMeSort == 'DESC'">
                     password desc
+                </when>
+                <when test="orderByMe == 'salt' and orderByMeSort == 'DESC'">
+                    salt desc
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'DESC'">
                     create_time desc
@@ -96,7 +107,7 @@
     <!--模糊查询指定行数据-->
     <select id="queryAllLike" resultMap="UserMap">
         select
-        id, username, password, create_time, update_time, deleted from user
+        id, username, password, salt, create_time, update_time, deleted from user
         <where>
             <if test="id != null">
                 and id like concat('%',#{id},'%')
@@ -106,6 +117,9 @@
             </if>
             <if test="password != null and password != ''">
                 and password like concat('%',#{password},'%')
+            </if>
+            <if test="salt != null and salt != ''">
+                and salt like concat('%',#{salt},'%')
             </if>
             <if test="createTime != null">
                 and create_time like concat('%',#{createTime},'%')
@@ -129,6 +143,9 @@
                 <when test="orderByMe == 'password' and orderByMeSort == 'ASC'">
                     password
                 </when>
+                <when test="orderByMe == 'salt' and orderByMeSort == 'ASC'">
+                    salt
+                </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'ASC'">
                     create_time
                 </when>
@@ -146,6 +163,9 @@
                 </when>
                 <when test="orderByMe == 'password' and orderByMeSort == 'DESC'">
                     password desc
+                </when>
+                <when test="orderByMe == 'salt' and orderByMeSort == 'DESC'">
+                    salt desc
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'DESC'">
                     create_time desc
@@ -177,6 +197,9 @@
             <if test="password != null and password != ''">
                 and password = #{password}
             </if>
+            <if test="salt != null and salt != ''">
+                and salt = #{salt}
+            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
             </if>
@@ -191,30 +214,34 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password)
-        values (#{username}, #{password})
+        insert into user(username, password, salt, create_time, update_time, deleted)
+        values (#{username}, #{password}, #{salt}, #{createTime}, #{updateTime}, #{deleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into user
-        (username, password, create_time, update_time, deleted)
+        (username, password, salt, create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.createTime}, #{entity.updateTime}, #{entity.deleted})
+            (#{entity.username}, #{entity.password}, #{entity.salt}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.deleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
         insert into user
-        (username, password, create_time, update_time, deleted)
+        (username, password, salt, create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.createTime}, #{entity.updateTime}, #{entity.deleted})
+            (#{entity.username}, #{entity.password}, #{entity.salt}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.deleted})
         </foreach>
         on duplicate key update
         username = values(username
         ),
         password = values(password
+        ),
+        salt = values(salt
         ),
         create_time = values(create_time
         ),
@@ -222,6 +249,11 @@
         ),
         deleted = values(deleted
         )
+    </insert>
+
+    <insert id="register" keyProperty="id" useGeneratedKeys="true">
+        insert into user(username, password, salt)
+        values (#{username}, #{password}, #{salt})
     </insert>
 
     <!--通过主键修改数据-->
@@ -233,6 +265,9 @@
             </if>
             <if test="password != null and password != ''">
                 password = #{password},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime},

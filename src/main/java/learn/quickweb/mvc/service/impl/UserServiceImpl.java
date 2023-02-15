@@ -1,6 +1,7 @@
 package learn.quickweb.mvc.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import learn.quickweb.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import learn.quickweb.mvc.domain.User;
 import learn.quickweb.mvc.mapper.UserMapper;
@@ -9,12 +10,13 @@ import learn.quickweb.util.R;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 /**
  * 用户表(User)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:42
  */
 @Slf4j
 @Service
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public R queryById(Integer id) {
-        return R.ok().setData(this.userMapper.queryById(id));
+        return R.ok().data(this.userMapper.queryById(id));
     }
 
     /**
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public R queryAll(User user) {
-        return R.ok().setData(this.userMapper.queryAll(user));
+        return R.ok().data(this.userMapper.queryAll(user));
     }
 
     /**
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public R queryAllLike(User user) {
-        return R.ok().setData(this.userMapper.queryAllLike(user));
+        return R.ok().data(this.userMapper.queryAllLike(user));
     }
 
     /**
@@ -65,7 +67,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public R page(int pageNum, int pageSize, User user) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userMapper.queryAll(user)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userMapper.queryAll(user)));
     }
 
     /**
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public R pageLike(int pageNum, int pageSize, User user) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userMapper.queryAllLike(user)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userMapper.queryAllLike(user)));
     }
 
     /**
@@ -90,7 +92,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public R insert(User user) {
         this.userMapper.insert(user);
-        return R.ok().setData(user);
+        return R.ok().data(user);
+    }
+
+    /**
+     * 注册用户
+     */
+    @Override
+    public R register(User user) {
+        user.setSalt(UUID.randomUUID().toString());
+        user.setPassword(MD5Util.toMD5(user.getPassword(), user.getSalt()));
+        this.userMapper.register(user);
+        return R.ok().data(user);
     }
 
     /**
@@ -102,7 +115,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public R update(User user) {
         this.userMapper.update(user);
-        return R.ok().setData(this.userMapper.queryById(user.getId()));
+        return R.ok().data(this.userMapper.queryById(user.getId()));
     }
 
     /**
@@ -114,6 +127,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public R deleteById(Integer id) {
         boolean del = this.userMapper.deleteById(id) > 0;
-        return R.ok().setData(del);
+        return R.ok().data(del);
     }
 }

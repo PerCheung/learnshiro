@@ -3,6 +3,8 @@ package learn.quickweb.mvc.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import learn.quickweb.config.jwt.JWTUtil;
+import learn.quickweb.mvc.domain.User;
+import learn.quickweb.mvc.mapper.UserMapper;
 import learn.quickweb.util.MD5Util;
 import learn.quickweb.util.R;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 /**
  * @author Peter Cheung
  * 2023/2/13 17:05
@@ -23,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Api(tags = "资源")
 public class WebController {
+    @Resource
+    private UserMapper userMapper;
+
     /**
      * 登入
      */
@@ -30,8 +37,11 @@ public class WebController {
     @PostMapping("/login")
     public R login(@RequestParam("username") String username,
                    @RequestParam("password") String password) {
-        password = MD5Util.toMD5(password);
-        return R.ok().setData(JWTUtil.createToken(username, password));
+        User user = new User();
+        user.setUsername(username);
+        String salt = userMapper.queryAll(user).get(0).getSalt();
+        password = MD5Util.toMD5(password, salt);
+        return R.ok().data(JWTUtil.createToken(username, password));
     }
 
 
@@ -40,9 +50,9 @@ public class WebController {
     public R article() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            return R.ok().setData("你已登录");
+            return R.ok().data("你已登录");
         } else {
-            return R.ok().setData("你是游客");
+            return R.ok().data("你是游客");
         }
     }
 
@@ -53,7 +63,7 @@ public class WebController {
     @GetMapping("/require_auth")
     @RequiresAuthentication
     public R requireAuth() {
-        return R.ok().setData("您已通过身份验证");
+        return R.ok().data("您已通过身份验证");
     }
 
     /**
@@ -63,7 +73,7 @@ public class WebController {
     @ApiOperation("admin的角色用户才可以登入")
     @RequiresRoles("admin")
     public R requireRole() {
-        return R.ok().setData("您正在访问管理员页面");
+        return R.ok().data("您正在访问管理员页面");
     }
 
     /**
@@ -73,13 +83,13 @@ public class WebController {
     @ApiOperation("拥有view和edit权限的用户才可以访问")
     @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
     public R requirePermission() {
-        return R.ok().setData("您正在访问编辑和查看页面");
+        return R.ok().data("您正在访问编辑和查看页面");
     }
 
     @RequestMapping(path = "/401")
     @ApiOperation("401")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public R unauthorized() {
-        return R.unauthorized().setData("401-Unauthorized");
+        return R.unauthorized().data("未登录");
     }
 }

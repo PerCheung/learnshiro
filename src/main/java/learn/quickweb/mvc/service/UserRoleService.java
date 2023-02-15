@@ -7,7 +7,7 @@ import learn.quickweb.util.R;
  * 用户角色连接表(UserRole)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:43
  */
 public interface UserRoleService {
 

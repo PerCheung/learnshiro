@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 public class JWTFilter extends BasicHttpAuthenticationFilter {
     /**
      * 判断用户是否登入
+     * <p>
      * 检测header里面是否包含token字段即可
-     * 有token表示用户已经登录！但！这不代表token是合法的。
+     * <p>
+     * 有token表示用户已经登录！
+     * <p>
+     * 但！！！这不代表token是合法的。
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
@@ -42,6 +46,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
+     * <p>
      * 例如我们提供一个地址 GET /article
      * 登入用户和游客看到的内容是不同的
      * 如果在这里返回了false，请求会被直接拦截，用户看不到任何东西

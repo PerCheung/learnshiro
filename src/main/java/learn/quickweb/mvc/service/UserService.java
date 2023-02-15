@@ -7,7 +7,7 @@ import learn.quickweb.util.R;
  * 用户表(User)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:42
  */
 public interface UserService {
 
@@ -62,6 +62,11 @@ public interface UserService {
      * @return 实例对象
      */
     R insert(User user);
+
+    /**
+     * 注册用户
+     */
+    R register(User user);
 
     /**
      * 修改数据

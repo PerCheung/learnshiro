@@ -23,17 +23,22 @@ import static learn.quickweb.config.constant.Constant.PACKAGE_NAME;
 @ControllerAdvice
 @ResponseBody
 public class AllExceptionHandle {
-    //捕捉shiro的异常
+    /**
+     * 捕捉shiro的异常
+     */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({ShiroException.class, UnauthorizedException.class})
     public R handleShiro(Exception e) {
-        return R.unauthorized().setData(e(e));
+        return R.unauthorized().data(e(e));
     }
 
+    /**
+     * 全局异常处理
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R exception(Exception e) {
-        return R.exp().setData(e(e));
+        return R.exp().data(e(e));
     }
 
     private String e(Exception e) {
@@ -57,9 +62,25 @@ public class AllExceptionHandle {
                 errorMessage.append(errorName);
                 String errorLineNumber = ":" + stackTraceElement.getLineNumber();
                 errorMessage.append(errorLineNumber);
+                //控制台颜色 91-亮红 1-字体加粗
+                System.out.println("\033[91;1m详解错误信息如下：");
+                //错误信息打印
+                log.error(errorMessage.toString());
+                //控制台清除状态
+                System.out.print("\033[0m");
+                //控制台颜色还原 93-亮黄
+                System.out.print("\033[93m");
                 return errorMessage.toString();
             }
         }
+        //控制台颜色 91-亮红 1-字体加粗
+        System.out.println("\033[91;1m详解错误信息如下：");
+        //错误信息打印
+        log.error(errorMessage.toString());
+        //控制台清除状态
+        System.out.print("\033[0m");
+        //控制台颜色还原 93-亮黄
+        System.out.print("\033[93m");
         return errorMessage.toString();
     }
 }

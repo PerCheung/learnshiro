@@ -14,7 +14,7 @@ import java.util.Date;
  * 权限角色连接表(PermissionRole)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:50
+ * @since 2023-02-15 15:43:40
  */
 @Slf4j
 @Data
@@ -22,7 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("权限角色连接表(PermissionRole)实体类")
 public class PermissionRole implements Serializable {
-    private static final long serialVersionUID = 179064312454649521L;
+    private static final long serialVersionUID = 555153649253426718L;
     /**
      * 主键
      */

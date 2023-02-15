@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 权限角色连接表(PermissionRole)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:50
+ * @since 2023-02-15 15:43:40
  */
 @Slf4j
 @Service
@@ -30,7 +30,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      */
     @Override
     public R queryById(Integer id) {
-        return R.ok().setData(this.permissionRoleMapper.queryById(id));
+        return R.ok().data(this.permissionRoleMapper.queryById(id));
     }
 
     /**
@@ -41,7 +41,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      */
     @Override
     public R queryAll(PermissionRole permissionRole) {
-        return R.ok().setData(this.permissionRoleMapper.queryAll(permissionRole));
+        return R.ok().data(this.permissionRoleMapper.queryAll(permissionRole));
     }
 
     /**
@@ -52,7 +52,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      */
     @Override
     public R queryAllLike(PermissionRole permissionRole) {
-        return R.ok().setData(this.permissionRoleMapper.queryAllLike(permissionRole));
+        return R.ok().data(this.permissionRoleMapper.queryAllLike(permissionRole));
     }
 
     /**
@@ -65,7 +65,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      */
     @Override
     public R page(int pageNum, int pageSize, PermissionRole permissionRole) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionRoleMapper.queryAll(permissionRole)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionRoleMapper.queryAll(permissionRole)));
     }
 
     /**
@@ -78,7 +78,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      */
     @Override
     public R pageLike(int pageNum, int pageSize, PermissionRole permissionRole) {
-        return R.ok().setData(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionRoleMapper.queryAllLike(permissionRole)));
+        return R.ok().data(PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.permissionRoleMapper.queryAllLike(permissionRole)));
     }
 
     /**
@@ -90,7 +90,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     @Override
     public R insert(PermissionRole permissionRole) {
         this.permissionRoleMapper.insert(permissionRole);
-        return R.ok().setData(permissionRole);
+        return R.ok().data(permissionRole);
     }
 
     /**
@@ -102,7 +102,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     @Override
     public R update(PermissionRole permissionRole) {
         this.permissionRoleMapper.update(permissionRole);
-        return R.ok().setData(this.permissionRoleMapper.queryById(permissionRole.getId()));
+        return R.ok().data(this.permissionRoleMapper.queryById(permissionRole.getId()));
     }
 
     /**
@@ -114,6 +114,6 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     @Override
     public R deleteById(Integer id) {
         boolean del = this.permissionRoleMapper.deleteById(id) > 0;
-        return R.ok().setData(del);
+        return R.ok().data(del);
     }
 }

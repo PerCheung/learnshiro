@@ -10,7 +10,7 @@ import java.util.List;
  * 用户表(User)表数据库访问层
  *
  * @author Peter Cheung
- * @since 2023-02-13 15:17:51
+ * @since 2023-02-15 15:43:41
  */
 @Mapper
 public interface UserMapper {
@@ -54,6 +54,11 @@ public interface UserMapper {
      * @return 影响行数
      */
     int insert(User user);
+
+    /**
+     * 注册用户
+     */
+    int register(User user);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
