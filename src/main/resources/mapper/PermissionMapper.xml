@@ -3,9 +3,7 @@
 <mapper namespace="learn.quickweb.mvc.mapper.PermissionMapper">
 
     <resultMap type="learn.quickweb.mvc.domain.Permission" id="PermissionMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="permissionId" column="permission_id" jdbcType="VARCHAR"/>
-        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="permission" column="permission" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="deleted" column="deleted" jdbcType="INTEGER"/>
@@ -13,29 +11,21 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="PermissionMap">
-        select id,
-               permission_id,
-               description,
+        select permission,
                create_time,
                update_time,
                deleted
         from permission
-        where id = #{id}
+        where permission = #{permission}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAll" resultMap="PermissionMap">
         select
-        id, permission_id, description, create_time, update_time, deleted from permission
+        permission, create_time, update_time, deleted from permission
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id = #{permissionId}
-            </if>
-            <if test="description != null and description != ''">
-                and description = #{description}
+            <if test="permission != null and permission != ''">
+                and permission = #{permission}
             </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
@@ -50,14 +40,8 @@
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'ASC'">
-                    permission_id
-                </when>
-                <when test="orderByMe == 'description' and orderByMeSort == 'ASC'">
-                    description
+                <when test="orderByMe == 'permission' and orderByMeSort == 'ASC'">
+                    permission
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'ASC'">
                     create_time
@@ -68,14 +52,8 @@
                 <when test="orderByMe == 'deleted' and orderByMeSort == 'ASC'">
                     deleted
                 </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'DESC'">
-                    permission_id desc
-                </when>
-                <when test="orderByMe == 'description' and orderByMeSort == 'DESC'">
-                    description desc
+                <when test="orderByMe == 'permission' and orderByMeSort == 'DESC'">
+                    permission desc
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'DESC'">
                     create_time desc
@@ -96,16 +74,10 @@
     <!--模糊查询指定行数据-->
     <select id="queryAllLike" resultMap="PermissionMap">
         select
-        id, permission_id, description, create_time, update_time, deleted from permission
+        permission, create_time, update_time, deleted from permission
         <where>
-            <if test="id != null">
-                and id like concat('%',#{id},'%')
-            </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id like concat('%',#{permissionId},'%')
-            </if>
-            <if test="description != null and description != ''">
-                and description like concat('%',#{description},'%')
+            <if test="permission != null and permission != ''">
+                and permission like concat('%',#{permission},'%')
             </if>
             <if test="createTime != null">
                 and create_time like concat('%',#{createTime},'%')
@@ -120,14 +92,8 @@
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'ASC'">
-                    permission_id
-                </when>
-                <when test="orderByMe == 'description' and orderByMeSort == 'ASC'">
-                    description
+                <when test="orderByMe == 'permission' and orderByMeSort == 'ASC'">
+                    permission
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'ASC'">
                     create_time
@@ -138,14 +104,8 @@
                 <when test="orderByMe == 'deleted' and orderByMeSort == 'ASC'">
                     deleted
                 </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'DESC'">
-                    permission_id desc
-                </when>
-                <when test="orderByMe == 'description' and orderByMeSort == 'DESC'">
-                    description desc
+                <when test="orderByMe == 'permission' and orderByMeSort == 'DESC'">
+                    permission desc
                 </when>
                 <when test="orderByMe == 'createTime' and orderByMeSort == 'DESC'">
                     create_time desc
@@ -168,14 +128,8 @@
         select count(*)
         from permission
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id = #{permissionId}
-            </if>
-            <if test="description != null and description != ''">
-                and description = #{description}
+            <if test="permission != null and permission != ''">
+                and permission = #{permission}
             </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
@@ -190,51 +144,39 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into permission(permission_id, description, create_time, update_time, deleted)
-        values (#{permissionId}, #{description}, #{createTime}, #{updateTime}, #{deleted})
+    <insert id="insert" keyProperty="permission">
+        insert into permission(permission, create_time, update_time, deleted)
+        values (#{permission}, #{createTime}, #{updateTime}, #{deleted})
     </insert>
 
-    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertBatch" keyProperty="permission">
         insert into permission
-        (permission_id, description, create_time, update_time, deleted)
+        (permission,create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.permissionId}, #{entity.description}, #{entity.createTime}, #{entity.updateTime},
-            #{entity.deleted})
+            (#{entity.permission},#{entity.createTime}, #{entity.updateTime}, #{entity.deleted})
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertOrUpdateBatch" keyProperty="permission">
         insert into permission
-        (permission_id, description, create_time, update_time, deleted)
+        (permission,create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.permissionId}, #{entity.description}, #{entity.createTime}, #{entity.updateTime},
-            #{entity.deleted})
+            (#{entity.permission},#{entity.createTime}, #{entity.updateTime}, #{entity.deleted})
         </foreach>
         on duplicate key update
-        permission_id = values(permission_id
-        ),
-        description = values(description
-        ),
-        create_time = values(create_time
-        ),
-        update_time = values(update_time
-        ),
-        deleted = values(deleted
-        )
+        create_time = values(create_time),
+        update_time = values(update_time),
+        deleted = values(deleted)
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update permission
         <set>
-            <if test="permissionId != null and permissionId != ''">
-                permission_id = #{permissionId},
-            </if>
-            <if test="description != null and description != ''">
-                description = #{description},
+            <if test="permission != null and permission != ''">
+                permission = #{permission},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime},
@@ -246,14 +188,14 @@
                 deleted = #{deleted},
             </if>
         </set>
-        where id = #{id}
+        where permission = #{permission}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
         from permission
-        where id = #{id}
+        where permission = #{permission}
     </delete>
 
 </mapper>

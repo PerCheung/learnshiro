@@ -14,7 +14,7 @@ import java.util.Date;
  * 权限表(Permission)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:39
+ * @since 2023-02-16 13:26:19
  */
 @Slf4j
 @Data
@@ -22,22 +22,12 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("权限表(Permission)实体类")
 public class Permission implements Serializable {
-    private static final long serialVersionUID = -11466747993232355L;
+    private static final long serialVersionUID = 852874834686124349L;
     /**
-     * 主键
+     * 权限
      */
-    @ApiModelProperty(value = "主键")
-    private Integer id;
-    /**
-     * 权限id
-     */
-    @ApiModelProperty(value = "权限id")
-    private String permissionId;
-    /**
-     * 权限描述
-     */
-    @ApiModelProperty(value = "权限描述")
-    private String description;
+    @ApiModelProperty(value = "权限")
+    private String permission;
     /**
      * 创建时间
      */

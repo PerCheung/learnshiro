@@ -14,7 +14,7 @@ import java.util.Date;
  * 角色表(Role)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:21
  */
 @Slf4j
 @Data
@@ -22,22 +22,12 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("角色表(Role)实体类")
 public class Role implements Serializable {
-    private static final long serialVersionUID = 725823627322320565L;
+    private static final long serialVersionUID = -18120567404084775L;
     /**
-     * 主键
+     * 角色
      */
-    @ApiModelProperty(value = "主键")
-    private Integer id;
-    /**
-     * 角色id
-     */
-    @ApiModelProperty(value = "角色id")
-    private String roleId;
-    /**
-     * 角色名
-     */
-    @ApiModelProperty(value = "角色名")
-    private String roleName;
+    @ApiModelProperty(value = "角色")
+    private String role;
     /**
      * 创建时间
      */

@@ -7,17 +7,17 @@ import learn.quickweb.util.R;
  * 用户角色连接表(UserRole)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:43
+ * @since 2023-02-16 13:26:22
  */
 public interface UserRoleService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param userRole 主键
      * @return 实例对象
      */
-    R queryById(Integer id);
+    R queryById(UserRole userRole);
 
     /**
      * 全查询
@@ -74,9 +74,9 @@ public interface UserRoleService {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param userRole 主键
      * @return 是否成功
      */
-    R deleteById(Integer id);
+    R deleteById(UserRole userRole);
 
 }

@@ -6,8 +6,7 @@ use shiro_learn;
 
 create table user
 (
-    id          int primary key auto_increment comment '主键',
-    username    varchar(36) not null unique comment '用户名',
+    username    varchar(36) primary key comment '用户名',
     password    varchar(32) not null comment '密码',
     salt        varchar(36) not null comment '盐',
     create_time datetime default now() comment '创建时间',
@@ -24,9 +23,7 @@ create trigger user_update
 
 create table role
 (
-    id          int primary key auto_increment comment '主键',
-    role_id     varchar(20) not null unique comment '角色id',
-    role_name   varchar(36) not null unique comment '角色名',
+    role        varchar(36) primary key comment '角色',
     create_time datetime default now() comment '创建时间',
     update_time datetime default now() comment '修改时间',
     deleted     int      default 0 comment '逻辑删除'
@@ -42,12 +39,10 @@ create trigger role_update
 
 create table permission
 (
-    id            int primary key auto_increment comment '主键',
-    permission_id varchar(20) not null unique comment '权限id',
-    description   varchar(36) not null unique comment '权限描述',
-    create_time   datetime default now() comment '创建时间',
-    update_time   datetime default now() comment '修改时间',
-    deleted       int      default 0 comment '逻辑删除'
+    permission  varchar(255) primary key comment '权限',
+    create_time datetime default now() comment '创建时间',
+    update_time datetime default now() comment '修改时间',
+    deleted     int      default 0 comment '逻辑删除'
 ) comment '权限表'
     engine = innodb
     default charset = utf8mb4;
@@ -59,21 +54,39 @@ create trigger permission_update
 
 create table user_role
 (
-    id       int primary key auto_increment comment '主键',
     username varchar(36) not null comment '用户名',
-    role_id  varchar(20) not null comment '角色id',
-    unique (username, role_id)
+    role     varchar(36) not null comment '角色',
+    primary key (username, role)
 ) comment '用户角色连接表'
     engine = innodb
     default charset = utf8mb4;
 
 create table permission_role
 (
-    id            int primary key auto_increment comment '主键',
-    permission_id varchar(20) not null comment '权限id',
-    role_id       varchar(20) not null comment '角色id',
-    unique (permission_id, role_id)
+    permission varchar(255) not null comment '权限',
+    role       varchar(36)  not null comment '角色',
+    primary key (permission, role)
 ) comment '权限角色连接表'
     engine = innodb
     default charset = utf8mb4;
 
+INSERT INTO permission(permission)
+VALUES ('view'),
+       ('edit');
+
+INSERT INTO role(role)
+VALUES ('user'),
+       ('admin');
+
+INSERT INTO permission_role
+VALUES ('view', 'user'),
+       ('view', 'admin'),
+       ('edit', 'admin');
+
+
+INSERT INTO user_role
+VALUES ('admin', 'admin'),
+       ('user', 'user');
+
+# 角色：user, admin
+# 调用注册接口注册 POST http://localhost:8081/register

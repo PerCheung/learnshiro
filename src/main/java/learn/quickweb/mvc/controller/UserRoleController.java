@@ -15,11 +15,11 @@ import javax.annotation.Resource;
  * 用户角色连接表(UserRole)表控制层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:42
+ * @since 2023-02-16 13:26:22
  */
 @Slf4j
 @RestController
-@RequestMapping("userRole")
+@RequestMapping("userrole")
 @Api(tags = "用户角色连接表(UserRole)表控制层")
 public class UserRoleController {
     /**
@@ -59,9 +59,9 @@ public class UserRoleController {
      * @return 单条数据
      */
     @ApiOperation("通过主键查询单条数据")
-    @GetMapping("{id}")
-    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") Integer id) {
-        return this.userRoleService.queryById(id);
+    @GetMapping("this")
+    public R queryById(@ApiParam(value = "userRole 筛选条件") UserRole userRole) {
+        return this.userRoleService.queryById(userRole);
     }
 
     /**
@@ -124,8 +124,8 @@ public class UserRoleController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public R deleteById(@ApiParam(value = "id 主键") @RequestParam Integer id) {
-        return this.userRoleService.deleteById(id);
+    public R deleteById(@ApiParam(value = "userRole 筛选条件") UserRole userRole) {
+        return this.userRoleService.deleteById(userRole);
     }
 
 }

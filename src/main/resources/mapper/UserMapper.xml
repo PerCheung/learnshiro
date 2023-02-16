@@ -3,7 +3,6 @@
 <mapper namespace="learn.quickweb.mvc.mapper.UserMapper">
 
     <resultMap type="learn.quickweb.mvc.domain.User" id="UserMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="salt" column="salt" jdbcType="VARCHAR"/>
@@ -14,25 +13,21 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="UserMap">
-        select id,
-               username,
+        select username,
                password,
                salt,
                create_time,
                update_time,
                deleted
         from user
-        where id = #{id}
+        where username = #{username}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAll" resultMap="UserMap">
         select
-        id, username, password, salt, create_time, update_time, deleted from user
+        username, password, salt, create_time, update_time, deleted from user
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
             <if test="username != null and username != ''">
                 and username = #{username}
             </if>
@@ -55,9 +50,6 @@
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
-                </when>
                 <when test="orderByMe == 'username' and orderByMeSort == 'ASC'">
                     username
                 </when>
@@ -75,9 +67,6 @@
                 </when>
                 <when test="orderByMe == 'deleted' and orderByMeSort == 'ASC'">
                     deleted
-                </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
                 </when>
                 <when test="orderByMe == 'username' and orderByMeSort == 'DESC'">
                     username desc
@@ -107,11 +96,8 @@
     <!--模糊查询指定行数据-->
     <select id="queryAllLike" resultMap="UserMap">
         select
-        id, username, password, salt, create_time, update_time, deleted from user
+        username, password, salt, create_time, update_time, deleted from user
         <where>
-            <if test="id != null">
-                and id like concat('%',#{id},'%')
-            </if>
             <if test="username != null and username != ''">
                 and username like concat('%',#{username},'%')
             </if>
@@ -134,9 +120,6 @@
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
-                </when>
                 <when test="orderByMe == 'username' and orderByMeSort == 'ASC'">
                     username
                 </when>
@@ -154,9 +137,6 @@
                 </when>
                 <when test="orderByMe == 'deleted' and orderByMeSort == 'ASC'">
                     deleted
-                </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
                 </when>
                 <when test="orderByMe == 'username' and orderByMeSort == 'DESC'">
                     username desc
@@ -188,9 +168,6 @@
         select count(*)
         from user
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
             <if test="username != null and username != ''">
                 and username = #{username}
             </if>
@@ -213,14 +190,14 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password, salt, create_time, update_time, deleted)
-        values (#{username}, #{password}, #{salt}, #{createTime}, #{updateTime}, #{deleted})
+    <insert id="insert" keyProperty="username">
+        insert into user(username, password, salt)
+        values (#{username}, #{password}, #{salt})
     </insert>
 
-    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertBatch" keyProperty="username">
         insert into user
-        (username, password, salt, create_time, update_time, deleted)
+        (username,password, salt, create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.username}, #{entity.password}, #{entity.salt}, #{entity.createTime}, #{entity.updateTime},
@@ -228,17 +205,15 @@
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertOrUpdateBatch" keyProperty="username">
         insert into user
-        (username, password, salt, create_time, update_time, deleted)
+        (username,password, salt, create_time, update_time, deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.username}, #{entity.password}, #{entity.salt}, #{entity.createTime}, #{entity.updateTime},
             #{entity.deleted})
         </foreach>
         on duplicate key update
-        username = values(username
-        ),
         password = values(password
         ),
         salt = values(salt
@@ -251,18 +226,10 @@
         )
     </insert>
 
-    <insert id="register" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password, salt)
-        values (#{username}, #{password}, #{salt})
-    </insert>
-
     <!--通过主键修改数据-->
     <update id="update">
         update user
         <set>
-            <if test="username != null and username != ''">
-                username = #{username},
-            </if>
             <if test="password != null and password != ''">
                 password = #{password},
             </if>
@@ -279,14 +246,14 @@
                 deleted = #{deleted},
             </if>
         </set>
-        where id = #{id}
+        where username = #{username}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
         from user
-        where id = #{id}
+        where username = #{username}
     </delete>
 
 </mapper>

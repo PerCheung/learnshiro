@@ -1,20 +1,19 @@
 package learn.quickweb.mvc.domain;
 
-import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 权限角色连接表(PermissionRole)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:20
  */
 @Slf4j
 @Data
@@ -22,22 +21,17 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("权限角色连接表(PermissionRole)实体类")
 public class PermissionRole implements Serializable {
-    private static final long serialVersionUID = 555153649253426718L;
+    private static final long serialVersionUID = 349722509623785183L;
     /**
-     * 主键
+     * 权限
      */
-    @ApiModelProperty(value = "主键")
-    private Integer id;
+    @ApiModelProperty(value = "权限")
+    private String permission;
     /**
-     * 权限id
+     * 角色
      */
-    @ApiModelProperty(value = "权限id")
-    private String permissionId;
-    /**
-     * 角色id
-     */
-    @ApiModelProperty(value = "角色id")
-    private String roleId;
+    @ApiModelProperty(value = "角色")
+    private String role;
     /**
      * 用此变量排序
      */

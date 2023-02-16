@@ -7,17 +7,17 @@ import learn.quickweb.util.R;
  * 角色表(Role)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:41
+ * @since 2023-02-16 13:26:21
  */
 public interface RoleService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 实例对象
      */
-    R queryById(Integer id);
+    R queryById(String role);
 
     /**
      * 全查询
@@ -74,9 +74,9 @@ public interface RoleService {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 是否成功
      */
-    R deleteById(Integer id);
+    R deleteById(String role);
 
 }

@@ -1,20 +1,19 @@
 package learn.quickweb.mvc.domain;
 
-import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户角色连接表(UserRole)实体类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:42
+ * @since 2023-02-16 13:26:22
  */
 @Slf4j
 @Data
@@ -22,22 +21,17 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("用户角色连接表(UserRole)实体类")
 public class UserRole implements Serializable {
-    private static final long serialVersionUID = 221851150729917986L;
-    /**
-     * 主键
-     */
-    @ApiModelProperty(value = "主键")
-    private Integer id;
+    private static final long serialVersionUID = 982985545954513997L;
     /**
      * 用户名
      */
     @ApiModelProperty(value = "用户名")
     private String username;
     /**
-     * 角色id
+     * 角色
      */
-    @ApiModelProperty(value = "角色id")
-    private String roleId;
+    @ApiModelProperty(value = "角色")
+    private String role;
     /**
      * 用此变量排序
      */

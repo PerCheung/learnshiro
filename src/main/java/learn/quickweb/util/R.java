@@ -10,12 +10,12 @@ import java.io.Serializable;
  * 统一返回对象R
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:43
+ * @since 2023-02-16 13:26:22
  */
 @Slf4j
 @ApiModel("统一返回对象R")
 public class R implements Serializable {
-    private static final long serialVersionUID = -82680831297458297L;
+    private static final long serialVersionUID = -67292705723365094L;
     @ApiModelProperty(value = "响应编码")
     private int code;
     @ApiModelProperty(value = "响应信息")

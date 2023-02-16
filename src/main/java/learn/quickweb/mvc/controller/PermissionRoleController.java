@@ -15,11 +15,11 @@ import javax.annotation.Resource;
  * 权限角色连接表(PermissionRole)表控制层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:20
  */
 @Slf4j
 @RestController
-@RequestMapping("permissionRole")
+@RequestMapping("permissionrole")
 @Api(tags = "权限角色连接表(PermissionRole)表控制层")
 public class PermissionRoleController {
     /**
@@ -59,9 +59,9 @@ public class PermissionRoleController {
      * @return 单条数据
      */
     @ApiOperation("通过主键查询单条数据")
-    @GetMapping("{id}")
-    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") Integer id) {
-        return this.permissionRoleService.queryById(id);
+    @GetMapping("this")
+    public R queryById(@ApiParam(value = "permissionRole 筛选条件") PermissionRole permissionRole) {
+        return this.permissionRoleService.queryById(permissionRole);
     }
 
     /**
@@ -119,13 +119,13 @@ public class PermissionRoleController {
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 删除是否成功
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public R deleteById(@ApiParam(value = "id 主键") @RequestParam Integer id) {
-        return this.permissionRoleService.deleteById(id);
+    public R deleteById(@ApiParam(value = "permissionRole 筛选条件") PermissionRole permissionRole) {
+        return this.permissionRoleService.deleteById(permissionRole);
     }
 
 }

@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * 权限表(Permission)表控制层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:38
+ * @since 2023-02-16 13:26:19
  */
 @Slf4j
 @RestController
@@ -60,7 +60,7 @@ public class PermissionController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") Integer id) {
+    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") String id) {
         return this.permissionService.queryById(id);
     }
 
@@ -124,7 +124,7 @@ public class PermissionController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public R deleteById(@ApiParam(value = "id 主键") @RequestParam Integer id) {
+    public R deleteById(@ApiParam(value = "id 主键") @RequestParam String id) {
         return this.permissionService.deleteById(id);
     }
 

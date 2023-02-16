@@ -31,12 +31,6 @@ public class MyRealm extends AuthorizingRealm {
     private UserMapper userMapper;
 
     @Resource
-    private RoleMapper roleMapper;
-
-    @Resource
-    private PermissionMapper permissionMapper;
-
-    @Resource
     private UserRoleMapper userRoleMapper;
 
     @Resource
@@ -66,18 +60,12 @@ public class MyRealm extends AuthorizingRealm {
         userRole.setUsername(username);
         List<UserRole> userRoles = userRoleMapper.queryAll(userRole);
         for (UserRole role : userRoles) {
-            String roleId = role.getRoleId();
-            Role getRole = new Role();
-            getRole.setRoleId(roleId);
-            roles.add(roleMapper.queryAll(getRole).get(0).getRoleName());
+            roles.add(role.getRole());
             PermissionRole permissionRole = new PermissionRole();
-            permissionRole.setRoleId(roleId);
+            permissionRole.setRole(role.getRole());
             List<PermissionRole> permissionRoles = permissionRoleMapper.queryAll(permissionRole);
             for (PermissionRole permission : permissionRoles) {
-                String permissionId = permission.getPermissionId();
-                Permission getPermission = new Permission();
-                getPermission.setPermissionId(permissionId);
-                permissions.add(permissionMapper.queryAll(getPermission).get(0).getDescription());
+                permissions.add(permission.getPermission());
             }
         }
         simpleAuthorizationInfo.addRoles(roles);
@@ -96,14 +84,12 @@ public class MyRealm extends AuthorizingRealm {
         if (username == null) {
             throw new AuthenticationException("token无效");
         }
-        User user = new User();
-        user.setUsername(username);
-        List<User> users = userMapper.queryAll(user);
-        if (users == null || users.isEmpty()) {
+        User user = userMapper.queryById(username);
+        if (user == null) {
             throw new AuthenticationException("用户不存在");
         }
 
-        if (!JWTUtil.verify(token, username, users.get(0).getPassword())) {
+        if (!JWTUtil.verify(token, username, user.getPassword())) {
             throw new AuthenticationException("密码错误");
         }
         return new SimpleAuthenticationInfo(token, token, "my_realm");

@@ -10,7 +10,7 @@ import java.util.List;
  * 权限角色连接表(PermissionRole)表数据库访问层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:20
  */
 @Mapper
 public interface PermissionRoleMapper {
@@ -18,10 +18,10 @@ public interface PermissionRoleMapper {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 实例对象
      */
-    PermissionRole queryById(Integer id);
+    PermissionRole queryById(PermissionRole permissionRole);
 
     /**
      * 查询指定行数据
@@ -64,15 +64,6 @@ public interface PermissionRoleMapper {
     int insertBatch(@Param("entities") List<PermissionRole> entities);
 
     /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<PermissionRole> 实例对象列表
-     * @return 影响行数
-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-     */
-    int insertOrUpdateBatch(@Param("entities") List<PermissionRole> entities);
-
-    /**
      * 修改数据
      *
      * @param permissionRole 实例对象
@@ -83,10 +74,10 @@ public interface PermissionRoleMapper {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(PermissionRole permissionRole);
 
 }
 

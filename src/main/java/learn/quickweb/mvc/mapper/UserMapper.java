@@ -10,7 +10,7 @@ import java.util.List;
  * 用户表(User)表数据库访问层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:41
+ * @since 2023-02-16 13:26:22
  */
 @Mapper
 public interface UserMapper {
@@ -18,10 +18,10 @@ public interface UserMapper {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param username 主键
      * @return 实例对象
      */
-    User queryById(Integer id);
+    User queryById(String username);
 
     /**
      * 查询指定行数据
@@ -56,11 +56,6 @@ public interface UserMapper {
     int insert(User user);
 
     /**
-     * 注册用户
-     */
-    int register(User user);
-
-    /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
      * @param entities List<User> 实例对象列表
@@ -88,10 +83,10 @@ public interface UserMapper {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param username 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(String username);
 
 }
 

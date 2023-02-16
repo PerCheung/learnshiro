@@ -3,55 +3,45 @@
 <mapper namespace="learn.quickweb.mvc.mapper.PermissionRoleMapper">
 
     <resultMap type="learn.quickweb.mvc.domain.PermissionRole" id="PermissionRoleMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="permissionId" column="permission_id" jdbcType="VARCHAR"/>
-        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+        <result property="permission" column="permission" jdbcType="VARCHAR"/>
+        <result property="role" column="role" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="PermissionRoleMap">
-        select id,
-               permission_id,
-               role_id
+    <!--查询单条-->
+    <select id="queryById" resultType="learn.quickweb.mvc.domain.PermissionRole">
+        select permission,
+               role
         from permission_role
-        where id = #{id}
+        where permission = #{permission}
+          and role = #{role}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAll" resultMap="PermissionRoleMap">
         select
-        id, permission_id, role_id from permission_role
+        permission, role from permission_role
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="permission != null and permission != ''">
+                and permission = #{permission}
             </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id = #{permissionId}
-            </if>
-            <if test="roleId != null and roleId != ''">
-                and role_id = #{roleId}
+            <if test="role != null and role != ''">
+                and role = #{role}
             </if>
         </where>
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
+                <when test="orderByMe == 'permission' and orderByMeSort == 'ASC'">
+                    permission
                 </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'ASC'">
-                    permission_id
+                <when test="orderByMe == 'role' and orderByMeSort == 'ASC'">
+                    role
                 </when>
-                <when test="orderByMe == 'roleId' and orderByMeSort == 'ASC'">
-                    role_id
+                <when test="orderByMe == 'permission' and orderByMeSort == 'DESC'">
+                    permission desc
                 </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'DESC'">
-                    permission_id desc
-                </when>
-                <when test="orderByMe == 'roleId' and orderByMeSort == 'DESC'">
-                    role_id desc
+                <when test="orderByMe == 'role' and orderByMeSort == 'DESC'">
+                    role desc
                 </when>
                 <otherwise>
                     1
@@ -63,38 +53,29 @@
     <!--模糊查询指定行数据-->
     <select id="queryAllLike" resultMap="PermissionRoleMap">
         select
-        id, permission_id, role_id from permission_role
+        permission, role from permission_role
         <where>
-            <if test="id != null">
-                and id like concat('%',#{id},'%')
+            <if test="permission != null and permission != ''">
+                and permission like concat('%',#{permission},'%')
             </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id like concat('%',#{permissionId},'%')
-            </if>
-            <if test="roleId != null and roleId != ''">
-                and role_id like concat('%',#{roleId},'%')
+            <if test="role != null and role != ''">
+                and role like concat('%',#{role},'%')
             </if>
         </where>
         <if test="orderByMe != null and orderByMe != '' and orderByMeSort != null and orderByMeSort != ''">
             order by
             <choose>
-                <when test="orderByMe == 'id' and orderByMeSort == 'ASC'">
-                    id
+                <when test="orderByMe == 'permission' and orderByMeSort == 'ASC'">
+                    permission
                 </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'ASC'">
-                    permission_id
+                <when test="orderByMe == 'role' and orderByMeSort == 'ASC'">
+                    role
                 </when>
-                <when test="orderByMe == 'roleId' and orderByMeSort == 'ASC'">
-                    role_id
+                <when test="orderByMe == 'permission' and orderByMeSort == 'DESC'">
+                    permission desc
                 </when>
-                <when test="orderByMe == 'id' and orderByMeSort == 'DESC'">
-                    id desc
-                </when>
-                <when test="orderByMe == 'permissionId' and orderByMeSort == 'DESC'">
-                    permission_id desc
-                </when>
-                <when test="orderByMe == 'roleId' and orderByMeSort == 'DESC'">
-                    role_id desc
+                <when test="orderByMe == 'role' and orderByMeSort == 'DESC'">
+                    role desc
                 </when>
                 <otherwise>
                     1
@@ -108,66 +89,50 @@
         select count(*)
         from permission_role
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="permission != null and permission != ''">
+                and permission = #{permission}
             </if>
-            <if test="permissionId != null and permissionId != ''">
-                and permission_id = #{permissionId}
-            </if>
-            <if test="roleId != null and roleId != ''">
-                and role_id = #{roleId}
+            <if test="role != null and role != ''">
+                and role = #{role}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into permission_role(permission_id, role_id)
-        values (#{permissionId}, #{roleId})
+    <insert id="insert">
+        insert into permission_role(permission, role)
+        values (#{permission}, #{role})
     </insert>
 
-    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertBatch">
         insert into permission_role
-        (permission_id, role_id)
+        (permission, role)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.permissionId}, #{entity.roleId})
+            (#{entity,permission}, #{entity,role})
         </foreach>
-    </insert>
-
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into permission_role
-        (permission_id, role_id)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.permissionId}, #{entity.roleId})
-        </foreach>
-        on duplicate key update
-        permission_id = values(permission_id
-        ),
-        role_id = values(role_id
-        )
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update permission_role
         <set>
-            <if test="permissionId != null and permissionId != ''">
-                permission_id = #{permissionId},
+            <if test="permission != null and permission != ''">
+                permission = #{permission},
             </if>
-            <if test="roleId != null and roleId != ''">
-                role_id = #{roleId},
+            <if test="role != null and role != ''">
+                role = #{role},
             </if>
         </set>
-        where id = #{id}
+        where permission = #{permission} and role = #{role}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
         from permission_role
-        where id = #{id}
+        where permission = #{permission}
+          and role = #{role}
     </delete>
 
 </mapper>

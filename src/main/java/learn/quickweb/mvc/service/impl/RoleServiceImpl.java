@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 角色表(Role)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:41
+ * @since 2023-02-16 13:26:21
  */
 @Slf4j
 @Service
@@ -25,12 +25,12 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 实例对象
      */
     @Override
-    public R queryById(Integer id) {
-        return R.ok().data(this.roleMapper.queryById(id));
+    public R queryById(String role) {
+        return R.ok().data(this.roleMapper.queryById(role));
     }
 
     /**
@@ -102,18 +102,18 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public R update(Role role) {
         this.roleMapper.update(role);
-        return R.ok().data(this.roleMapper.queryById(role.getId()));
+        return R.ok().data(this.roleMapper.queryById(role.getRole()));
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 是否成功
      */
     @Override
-    public R deleteById(Integer id) {
-        boolean del = this.roleMapper.deleteById(id) > 0;
+    public R deleteById(String role) {
+        boolean del = this.roleMapper.deleteById(role) > 0;
         return R.ok().data(del);
     }
 }

@@ -10,24 +10,10 @@
               <option name="fullColumn">
                 <list>
                   <ColumnInfoDTO>
-                    <option name="comment" value="主键" />
+                    <option name="comment" value="权限" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
-                    <option name="name" value="id" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="权限id" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="permissionId" />
-                    <option name="type" value="java.lang.String" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="权限描述" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="description" />
+                    <option name="name" value="permission" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
@@ -69,24 +55,17 @@
               <option name="fullColumn">
                 <list>
                   <ColumnInfoDTO>
-                    <option name="comment" value="主键" />
+                    <option name="comment" value="权限" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
-                    <option name="name" value="id" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="权限id" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="permissionId" />
+                    <option name="name" value="permission" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="角色id" />
+                    <option name="comment" value="角色" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
-                    <option name="name" value="roleId" />
+                    <option name="name" value="role" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                 </list>
@@ -107,24 +86,10 @@
               <option name="fullColumn">
                 <list>
                   <ColumnInfoDTO>
-                    <option name="comment" value="主键" />
+                    <option name="comment" value="角色" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
-                    <option name="name" value="id" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="角色id" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="roleId" />
-                    <option name="type" value="java.lang.String" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="角色名" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="roleName" />
+                    <option name="name" value="role" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
@@ -165,13 +130,6 @@
               <option name="comment" value="用户表" />
               <option name="fullColumn">
                 <list>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="主键" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="id" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="用户名" />
                     <option name="custom" value="false" />
@@ -232,13 +190,6 @@
               <option name="fullColumn">
                 <list>
                   <ColumnInfoDTO>
-                    <option name="comment" value="主键" />
-                    <option name="custom" value="false" />
-                    <option name="ext" value="{}" />
-                    <option name="name" value="id" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
                     <option name="comment" value="用户名" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
@@ -246,10 +197,10 @@
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="角色id" />
+                    <option name="comment" value="角色" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
-                    <option name="name" value="roleId" />
+                    <option name="name" value="role" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                 </list>

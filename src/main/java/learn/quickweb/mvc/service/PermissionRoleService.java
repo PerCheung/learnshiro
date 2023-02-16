@@ -7,17 +7,17 @@ import learn.quickweb.util.R;
  * 权限角色连接表(PermissionRole)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:21
  */
 public interface PermissionRoleService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 实例对象
      */
-    R queryById(Integer id);
+    R queryById(PermissionRole permissionRole);
 
     /**
      * 全查询
@@ -74,9 +74,9 @@ public interface PermissionRoleService {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 是否成功
      */
-    R deleteById(Integer id);
+    R deleteById(PermissionRole permissionRole);
 
 }

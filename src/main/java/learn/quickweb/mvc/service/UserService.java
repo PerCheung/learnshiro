@@ -7,17 +7,17 @@ import learn.quickweb.util.R;
  * 用户表(User)表服务接口
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:42
+ * @since 2023-02-16 13:26:22
  */
 public interface UserService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param username 主键
      * @return 实例对象
      */
-    R queryById(Integer id);
+    R queryById(String username);
 
     /**
      * 全查询
@@ -64,11 +64,6 @@ public interface UserService {
     R insert(User user);
 
     /**
-     * 注册用户
-     */
-    R register(User user);
-
-    /**
      * 修改数据
      *
      * @param user 实例对象
@@ -79,9 +74,9 @@ public interface UserService {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param username 主键
      * @return 是否成功
      */
-    R deleteById(Integer id);
+    R deleteById(String username);
 
 }

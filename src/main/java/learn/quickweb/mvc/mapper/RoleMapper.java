@@ -10,7 +10,7 @@ import java.util.List;
  * 角色表(Role)表数据库访问层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:41
+ * @since 2023-02-16 13:26:21
  */
 @Mapper
 public interface RoleMapper {
@@ -18,10 +18,10 @@ public interface RoleMapper {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 实例对象
      */
-    Role queryById(Integer id);
+    Role queryById(String role);
 
     /**
      * 查询指定行数据
@@ -83,10 +83,10 @@ public interface RoleMapper {
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param role 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(String role);
 
 }
 

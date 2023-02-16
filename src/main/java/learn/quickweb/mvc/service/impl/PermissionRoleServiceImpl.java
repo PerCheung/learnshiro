@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 权限角色连接表(PermissionRole)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:21
  */
 @Slf4j
 @Service
@@ -25,12 +25,12 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 实例对象
      */
     @Override
-    public R queryById(Integer id) {
-        return R.ok().data(this.permissionRoleMapper.queryById(id));
+    public R queryById(PermissionRole permissionRole) {
+        return R.ok().data(this.permissionRoleMapper.queryById(permissionRole));
     }
 
     /**
@@ -102,18 +102,18 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     @Override
     public R update(PermissionRole permissionRole) {
         this.permissionRoleMapper.update(permissionRole);
-        return R.ok().data(this.permissionRoleMapper.queryById(permissionRole.getId()));
+        return R.ok().data(this.permissionRoleMapper.queryById(permissionRole));
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param permissionRole 主键
      * @return 是否成功
      */
     @Override
-    public R deleteById(Integer id) {
-        boolean del = this.permissionRoleMapper.deleteById(id) > 0;
+    public R deleteById(PermissionRole permissionRole) {
+        boolean del = this.permissionRoleMapper.deleteById(permissionRole) > 0;
         return R.ok().data(del);
     }
 }

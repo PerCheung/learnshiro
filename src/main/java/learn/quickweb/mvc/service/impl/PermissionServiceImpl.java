@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 权限表(Permission)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:39
+ * @since 2023-02-16 13:26:20
  */
 @Slf4j
 @Service
@@ -25,12 +25,12 @@ public class PermissionServiceImpl implements PermissionService {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param permission 主键
      * @return 实例对象
      */
     @Override
-    public R queryById(Integer id) {
-        return R.ok().data(this.permissionMapper.queryById(id));
+    public R queryById(String permission) {
+        return R.ok().data(this.permissionMapper.queryById(permission));
     }
 
     /**
@@ -102,18 +102,18 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public R update(Permission permission) {
         this.permissionMapper.update(permission);
-        return R.ok().data(this.permissionMapper.queryById(permission.getId()));
+        return R.ok().data(this.permissionMapper.queryById(permission.getPermission()));
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param permission 主键
      * @return 是否成功
      */
     @Override
-    public R deleteById(Integer id) {
-        boolean del = this.permissionMapper.deleteById(id) > 0;
+    public R deleteById(String permission) {
+        boolean del = this.permissionMapper.deleteById(permission) > 0;
         return R.ok().data(del);
     }
 }

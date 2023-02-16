@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 用户角色连接表(UserRole)表服务实现类
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:43
+ * @since 2023-02-16 13:26:22
  */
 @Slf4j
 @Service
@@ -25,12 +25,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param userRole 主键
      * @return 实例对象
      */
     @Override
-    public R queryById(Integer id) {
-        return R.ok().data(this.userRoleMapper.queryById(id));
+    public R queryById(UserRole userRole) {
+        return R.ok().data(this.userRoleMapper.queryById(userRole));
     }
 
     /**
@@ -102,18 +102,18 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public R update(UserRole userRole) {
         this.userRoleMapper.update(userRole);
-        return R.ok().data(this.userRoleMapper.queryById(userRole.getId()));
+        return R.ok().data(this.userRoleMapper.queryById(userRole));
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param userRole 主键
      * @return 是否成功
      */
     @Override
-    public R deleteById(Integer id) {
-        boolean del = this.userRoleMapper.deleteById(id) > 0;
+    public R deleteById(UserRole userRole) {
+        boolean del = this.userRoleMapper.deleteById(userRole) > 0;
         return R.ok().data(del);
     }
 }

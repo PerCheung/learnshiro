@@ -14,10 +14,15 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 /**
  * @author Peter Cheung
@@ -26,6 +31,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 @Api(tags = "资源")
+@Validated
 public class WebController {
     @Resource
     private UserMapper userMapper;
@@ -34,17 +40,45 @@ public class WebController {
      * 登入
      */
     @ApiOperation("登入")
-    @PostMapping("/login")
+    @PostMapping("login")
     public R login(@RequestParam("username") String username,
                    @RequestParam("password") String password) {
-        User user = new User();
-        user.setUsername(username);
-        String salt = userMapper.queryAll(user).get(0).getSalt();
-        password = MD5Util.toMD5(password, salt);
+        User user = userMapper.queryById(username);
+        if (user == null) {
+            return R.unauthorized().data("用户不存在");
+        }
+        password = MD5Util.toMD5(password, user.getSalt());
+        if (!user.getPassword().equals(password)) {
+            return R.unauthorized().data("密码错误");
+        }
         return R.ok().data(JWTUtil.createToken(username, password));
     }
 
+    /**
+     * 注册用户
+     */
+    @ApiOperation("注册用户")
+    @PostMapping("register")
+    //@RequiresAuthentication 开启后，必须登录的用户才能注册
+    public R register(@NotBlank(message = "用户名不为空") @RequestParam("username") String username,
+                      @NotBlank(message = "密码不为空") @RequestParam("password") String password) {
+        User user = userMapper.queryById(username);
+        if (!(user == null)) {
+            return R.unauthorized().data("用户已存在");
+        }
+        //随机盐
+        String salt = UUID.randomUUID().toString();
+        String passwordSalt = MD5Util.toMD5(password, salt);
+        user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordSalt);
+        user.setSalt(salt);
+        return R.ok().data(this.userMapper.insert(user));
+    }
 
+    /**
+     * 所有人都可以访问，但是用户与游客看到的内容不同
+     */
     @ApiOperation("所有人都可以访问，但是用户与游客看到的内容不同")
     @GetMapping("/article")
     public R article() {
@@ -84,12 +118,5 @@ public class WebController {
     @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
     public R requirePermission() {
         return R.ok().data("您正在访问编辑和查看页面");
-    }
-
-    @RequestMapping(path = "/401")
-    @ApiOperation("401")
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public R unauthorized() {
-        return R.unauthorized().data("未登录");
     }
 }

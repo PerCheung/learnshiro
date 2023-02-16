@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * 角色表(Role)表控制层
  *
  * @author Peter Cheung
- * @since 2023-02-15 15:43:40
+ * @since 2023-02-16 13:26:21
  */
 @Slf4j
 @RestController
@@ -60,7 +60,7 @@ public class RoleController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") Integer id) {
+    public R queryById(@ApiParam(value = "id 主键") @PathVariable("id") String id) {
         return this.roleService.queryById(id);
     }
 
@@ -124,7 +124,7 @@ public class RoleController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public R deleteById(@ApiParam(value = "id 主键") @RequestParam Integer id) {
+    public R deleteById(@ApiParam(value = "id 主键") @RequestParam String id) {
         return this.roleService.deleteById(id);
     }
 

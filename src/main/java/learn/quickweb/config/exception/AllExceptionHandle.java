@@ -1,5 +1,6 @@
 package learn.quickweb.config.exception;
 
+import learn.quickweb.util.ErrorPrintUtil;
 import learn.quickweb.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -42,14 +43,7 @@ public class AllExceptionHandle {
     }
 
     private String e(Exception e) {
-        //控制台颜色 91-亮红 1-字体加粗
-        System.out.println("\033[91;1m错误信息如下：");
-        //错误信息打印
-        log.error(e.toString());
-        //控制台清除状态
-        System.out.print("\033[0m");
-        //控制台颜色还原 93-亮黄
-        System.out.print("\033[93m");
+        ErrorPrintUtil.print(e);
         //返回错误信息
         StringBuilder errorMessage = new StringBuilder();
         String error = StringUtils.isNotBlank(e.getMessage()) ? e.getMessage() : e.toString();
@@ -62,25 +56,11 @@ public class AllExceptionHandle {
                 errorMessage.append(errorName);
                 String errorLineNumber = ":" + stackTraceElement.getLineNumber();
                 errorMessage.append(errorLineNumber);
-                //控制台颜色 91-亮红 1-字体加粗
-                System.out.println("\033[91;1m详解错误信息如下：");
-                //错误信息打印
-                log.error(errorMessage.toString());
-                //控制台清除状态
-                System.out.print("\033[0m");
-                //控制台颜色还原 93-亮黄
-                System.out.print("\033[93m");
+                ErrorPrintUtil.print(errorMessage);
                 return errorMessage.toString();
             }
         }
-        //控制台颜色 91-亮红 1-字体加粗
-        System.out.println("\033[91;1m详解错误信息如下：");
-        //错误信息打印
-        log.error(errorMessage.toString());
-        //控制台清除状态
-        System.out.print("\033[0m");
-        //控制台颜色还原 93-亮黄
-        System.out.print("\033[93m");
+        ErrorPrintUtil.print(errorMessage);
         return errorMessage.toString();
     }
 }
