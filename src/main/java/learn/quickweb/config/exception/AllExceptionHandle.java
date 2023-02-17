@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ValidationException;
+
 import static learn.quickweb.config.constant.Constant.PACKAGE_NAME;
 
 /**
@@ -34,6 +36,15 @@ public class AllExceptionHandle {
     }
 
     /**
+     * 校验传参
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    public R handleBadRequest(Exception e) {
+        return R.badRequest().data(e(e));
+    }
+
+    /**
      * 全局异常处理
      */
     @ExceptionHandler(Exception.class)
@@ -44,7 +55,7 @@ public class AllExceptionHandle {
 
     private String e(Exception e) {
         ErrorPrintUtil.print(e);
-        //返回错误信息
+        //错误信息
         StringBuilder errorMessage = new StringBuilder();
         String error = StringUtils.isNotBlank(e.getMessage()) ? e.getMessage() : e.toString();
         errorMessage.append(error);

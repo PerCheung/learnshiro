@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import learn.quickweb.config.jwt.JWTUtil;
 import learn.quickweb.mvc.domain.User;
-import learn.quickweb.mvc.mapper.UserMapper;
+import learn.quickweb.mvc.service.UserService;
 import learn.quickweb.util.MD5Util;
 import learn.quickweb.util.R;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ import java.util.UUID;
 @Validated
 public class WebController {
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     /**
      * 登入
@@ -43,13 +43,13 @@ public class WebController {
     @PostMapping("login")
     public R login(@RequestParam("username") String username,
                    @RequestParam("password") String password) {
-        User user = userMapper.queryById(username);
+        User user = (User) userService.queryById(username).getData();
         if (user == null) {
-            return R.unauthorized().data("用户不存在");
+            return R.badRequest().data("用户不存在");
         }
         password = MD5Util.toMD5(password, user.getSalt());
         if (!user.getPassword().equals(password)) {
-            return R.unauthorized().data("密码错误");
+            return R.badRequest().data("密码错误");
         }
         return R.ok().data(JWTUtil.createToken(username, password));
     }
@@ -62,9 +62,9 @@ public class WebController {
     //@RequiresAuthentication 开启后，必须登录的用户才能注册
     public R register(@NotBlank(message = "用户名不为空") @RequestParam("username") String username,
                       @NotBlank(message = "密码不为空") @RequestParam("password") String password) {
-        User user = userMapper.queryById(username);
+        User user = (User) userService.queryById(username).getData();
         if (!(user == null)) {
-            return R.unauthorized().data("用户已存在");
+            return R.badRequest().data("用户已存在");
         }
         //随机盐
         String salt = UUID.randomUUID().toString();
@@ -73,7 +73,7 @@ public class WebController {
         user.setUsername(username);
         user.setPassword(passwordSalt);
         user.setSalt(salt);
-        return R.ok().data(this.userMapper.insert(user));
+        return this.userService.insert(user);
     }
 
     /**

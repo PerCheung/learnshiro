@@ -90,6 +90,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public R insert(User user) {
         this.userMapper.insert(user);
+        user = this.userMapper.queryById(user.getUsername());
+        user.setSalt(null);
+        user.setPassword(null);
         return R.ok().data(user);
     }
 
