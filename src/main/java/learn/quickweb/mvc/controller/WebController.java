@@ -60,10 +60,10 @@ public class WebController {
     @ApiOperation("注册用户")
     @PostMapping("register")
     //@RequiresAuthentication 开启后，必须登录的用户才能注册
-    public R register(@NotBlank(message = "用户名不为空") @RequestParam("username") String username,
-                      @NotBlank(message = "密码不为空") @RequestParam("password") String password) {
+    public R register(@NotBlank(message = "用户名不能为空") @RequestParam("username") String username,
+                      @NotBlank(message = "密码不能为空") @RequestParam("password") String password) {
         User user = (User) userService.queryById(username).getData();
-        if (!(user == null)) {
+        if (user != null) {
             return R.badRequest().data("用户已存在");
         }
         //随机盐

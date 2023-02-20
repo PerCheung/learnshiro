@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.ValidationException;
+import java.util.Arrays;
 
 import static learn.quickweb.config.constant.Constant.PACKAGE_NAME;
 
@@ -41,7 +42,18 @@ public class AllExceptionHandle {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
     public R handleBadRequest(Exception e) {
-        return R.badRequest().data(e(e));
+        e(e);
+        String[] split = e.getMessage().split(", ");
+        StringBuffer errors = new StringBuffer();
+        Arrays.stream(split).forEach(s -> {
+            String substring = s.substring(s.indexOf(": ") + 2);
+            if (errors.length() == 0) {
+                errors.append(substring);
+            } else {
+                errors.append("并且").append(substring);
+            }
+        });
+        return R.badRequest().data(errors);
     }
 
     /**
@@ -53,6 +65,12 @@ public class AllExceptionHandle {
         return R.exp().data(e(e));
     }
 
+    /**
+     * 异常信息处理主体方法
+     *
+     * @param e 异常对象
+     * @return 异常解析信息
+     */
     private String e(Exception e) {
         ErrorPrintUtil.print(e);
         //错误信息
